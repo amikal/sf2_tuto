@@ -8,10 +8,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/{slug}")
      */
-    public function indexAction()
+    public function indexAction($slug)
     {
-        return $this->render('SandboxFrontBundle:Default:index.html.twig');
+        return $this->render('SandboxFrontBundle:Default:index.html.twig', ['slug' => $slug]);
     }
 }

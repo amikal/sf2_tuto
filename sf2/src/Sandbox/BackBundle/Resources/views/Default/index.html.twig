@@ -1,5 +1,12 @@
 {% extends "base.html.twig" %}
 
+{% block title %}BACKOFFICE{% endblock %}
+
 {%  block body %}
     Hello Back World!
+    {% include ":Includes:index.body.html.twig" %}
+{% endblock %}
+
+{%  block footer %}
+    {% include ":Includes:footer.html.twig" %}
 {% endblock %}

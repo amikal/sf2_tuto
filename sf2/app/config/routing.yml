@@ -6,6 +6,6 @@ sandbox_back:
 sandbox_front:
     resource: "@SandboxFrontBundle/Controller/"
     type:     annotation
-    prefix:   /front
+    prefix:   /
 
 

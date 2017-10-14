@@ -1,5 +1,13 @@
 {% extends "base.html.twig" %}
 
+{% block title %}FRONTOFFICE{% endblock %}
+
 {%  block body %}
-Hello Front World!
+Hello Front World! and {{ slug }}
+    {{ include("SandboxFrontBundle:Includes:index.body.html.twig") }}
+{% endblock %}
+
+{%  block footer %}
+    {{ parent() }}
+    {% include ":Includes:footer.html.twig" %}
 {% endblock %}
