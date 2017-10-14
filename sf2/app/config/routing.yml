@@ -1,3 +1,11 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+sandbox_back:
+    resource: "@SandboxBackBundle/Controller/"
+    type:     annotation
+    prefix:   /back
+
+sandbox_front:
+    resource: "@SandboxFrontBundle/Controller/"
+    type:     annotation
+    prefix:   /front
+
+
