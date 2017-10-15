@@ -26,6 +26,11 @@ class CarController extends Controller
      */
     public function carListAction()
     {
-        return $this->render('SandboxFrontBundle:Car:carList.html.twig');
+//       $url = $this->generateUrl('sandbox_front_car_car', ['id' => 4]);
+//       return $this->redirect($url);
+//
+//       return $this->forward('SandboxFrontBundle:Car:Car', ['id' => 3]);
+
+       return $this->render('SandboxFrontBundle:Car:carList.html.twig');
     }
 }
