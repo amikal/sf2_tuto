@@ -67,8 +67,82 @@ coté twig récupération var session
 Username {{ app.session.get('userName') }} (pattern app.<service>.<method>.<params>)
 
 
+##flashbag messages
+$session->getFlashBag()->add('errors_info', 'no_error_here');
+
+cote twig \
+{{ app.session.flashbag.get('errors_info')[0] }} ou avec un for...
+
 #creation entities
 php app/console doctrine:database:create
 php app/console doctrine:generate:entity
 php app/console doctrine:schema:create
 php app/console doctrine:schema:update --force
+
+#DQL, repository query, QB
+$repository = $this->getDoctrine()->getManager()->getRepository('SandboxBackBundle:Car');
+$car = $repository->find($id);
+
+$repository = $this->getDoctrine()->getManager()->getRepository('SandboxBackBundle:Car');
+$cars = $repository->getAll();
+
+Dans repository \
+
+ $qb = $this->createQueryBuilder('c');
+
+//        $query = $qb
+//            ->where('c.type = :type')
+//            ->setParameter('type', 'citadine')
+//        ;
+
+        $query = $qb;
+
+        $result = $query->getQuery()->execute();
+
+        return $result;
+        
+        
+# Include twig with params json objects 
+{% for car in cars %}
+	{% include 'SandboxFrontBundle:Includes:car.info.html.twig' with {'car': car} %}
+{% endfor %}
+
+Path : 
+ <td><a href="{{ path('sandbox_front_car_car', { 'id' : car.id } ) }}">Détails</a></td>
+ 
+
+#Create Form, createAction, handling request, persist, redirect
+ $form = $this->createFormBuilder(new Car())
+            ->add('name')
+            ->add('type')
+            ->add('marque')
+            ->add('created', 'date')
+            ->add('submit', 'submit')
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if($request->isMethod('post') && $form->isValid()) {
+//            dump($form->isValid());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($form->getData());
+            $em->flush();
+
+            $url = $this->generateUrl('sandbox_front_car_carlist');
+            dump($url);
+            return $this->redirect($url);
+
+        }
+
+        return $this->render('SandboxFrontBundle:Car:create.html.twig', ['form' => $form->createView()]);
+
+Rendu du form \
+{{ form(form) }}
+
+ou custom \
+->add('name', null, ['label' => 'Nom du modèle'] )
+
+dans twig \
+    {{ form_start(form) }}
+    {{ form_label(form.name) }} {{ form_widget(form.name) }}
+    {{ form_rest(form) }}
