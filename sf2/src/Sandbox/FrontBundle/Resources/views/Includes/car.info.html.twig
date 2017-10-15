@@ -13,6 +13,7 @@
         <td>{{ car.type }}</td>
         <td>{{ car.marque }}</td>
         <td>{{ car.created|date('d-m-y') }}</td>
+        <td><a href="{{ path('sandbox_front_car_car', { 'id' : car.id } ) }}">Détails</a></td>
     </tr>
     </tbody>
 </table>

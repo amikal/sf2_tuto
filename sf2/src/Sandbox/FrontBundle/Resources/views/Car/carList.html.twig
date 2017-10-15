@@ -5,6 +5,9 @@
 {%  block body %}
     FRONTOFFICE - CAR LIST - Username {{ app.session.get('userName') }}
     {{ include("SandboxFrontBundle:Includes:index.body.html.twig") }}
+    {% for car in cars %}
+        {% include 'SandboxFrontBundle:Includes:car.info.html.twig' with {'car': car} %}
+    {% endfor %}
 {% endblock %}
 
 {%  block footer %}

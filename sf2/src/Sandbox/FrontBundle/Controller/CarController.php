@@ -64,6 +64,6 @@ class CarController extends Controller
        $cars = $repository->getAll();
        dump($cars);
 
-       return $this->render('SandboxFrontBundle:Car:carList.html.twig');
+       return $this->render('SandboxFrontBundle:Car:carList.html.twig', ['cars' => $cars]);
     }
 }

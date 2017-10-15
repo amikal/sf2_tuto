@@ -14,10 +14,12 @@ class CarRepository extends \Doctrine\ORM\EntityRepository
     {
         $qb = $this->createQueryBuilder('c');
 
-        $query = $qb
-            ->where('c.type = :type')
-            ->setParameter('type', 'citadine')
-        ;
+//        $query = $qb
+//            ->where('c.type = :type')
+//            ->setParameter('type', 'citadine')
+//        ;
+
+        $query = $qb;
 
         $result = $query->getQuery()->execute();
 
