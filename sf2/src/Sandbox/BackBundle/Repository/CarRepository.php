@@ -10,4 +10,17 @@ namespace Sandbox\BackBundle\Repository;
  */
 class CarRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAll()
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        $query = $qb
+            ->where('c.type = :type')
+            ->setParameter('type', 'citadine')
+        ;
+
+        $result = $query->getQuery()->execute();
+
+        return $result;
+    }
 }

@@ -60,6 +60,10 @@ class CarController extends Controller
 //       $em->persist($car);
 //       $em->flush();
 
+       $repository = $this->getDoctrine()->getManager()->getRepository('SandboxBackBundle:Car');
+       $cars = $repository->getAll();
+       dump($cars);
+
        return $this->render('SandboxFrontBundle:Car:carList.html.twig');
     }
 }
