@@ -5,6 +5,10 @@ namespace Sandbox\FrontBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+/**
+ * Class DefaultController
+ * @package Sandbox\FrontBundle\Controller
+ */
 class DefaultController extends Controller
 {
     /**

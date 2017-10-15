@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block title %}FRONTOFFICE - CAR LIST{% endblock %}
+
+{%  block body %}
+    FRONTOFFICE - CAR LIST
+    {{ include("SandboxFrontBundle:Includes:index.body.html.twig") }}
+{% endblock %}
+
+{%  block footer %}
+    {{ parent() }}
+    {% include ":Includes:footer.html.twig" %}
+{% endblock %}
