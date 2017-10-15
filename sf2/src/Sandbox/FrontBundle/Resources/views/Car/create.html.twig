@@ -5,7 +5,9 @@
 {%  block body %}
     FRONTOFFICE - CREATE A NEW CAR
     {{ include("SandboxFrontBundle:Includes:index.body.html.twig") }}
-    {{ form(form) }}
+    {{ form_start(form) }}
+    {{ form_label(form.name) }} {{ form_widget(form.name) }}
+    {{ form_rest(form) }}
 {% endblock %}
 
 {%  block footer %}

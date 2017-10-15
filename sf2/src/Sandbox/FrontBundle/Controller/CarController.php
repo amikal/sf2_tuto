@@ -23,7 +23,7 @@ class CarController extends Controller
     public function createAction(Request $request)
     {
         $form = $this->createFormBuilder(new Car())
-            ->add('name')
+            ->add('name', null, ['label' => 'Nom du modèle'] )
             ->add('type')
             ->add('marque')
             ->add('created', 'date')
