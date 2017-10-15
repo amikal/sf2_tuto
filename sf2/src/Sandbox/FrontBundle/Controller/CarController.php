@@ -24,6 +24,10 @@ class CarController extends Controller
         $session->set('userName', 'John');
         dump($session);
 
+        $session->getFlashBag()->add('errors_info', 'no_error_here');
+        $session->getFlashBag()->add('errors_info', 'no_error_here2');
+        $session->getFlashBag()->add('errors_info', 'no_error_here3');
+
         return $this->render('SandboxFrontBundle:Car:car.html.twig', ['id' => $id]);
     }
 
