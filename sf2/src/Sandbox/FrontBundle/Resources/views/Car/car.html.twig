@@ -3,7 +3,7 @@
 {% block title %}FRONTOFFICE - CAR{% endblock %}
 
 {%  block body %}
-    FRONTOFFICE - CAR - Number {{ id }} - Username {{ app.session.get('userName') }} - In flashBag ?
+    FRONTOFFICE - CAR - Number {# id #} - Username {{ app.session.get('userName') }} - In flashBag ?
     {# app.session.flashbag.get('errors_info')[0] #}
     <ul>
         {% for error in app.session.flashbag.get('errors_info') %}
@@ -11,6 +11,7 @@
         {% endfor %}
     </ul>
     {{ include("SandboxFrontBundle:Includes:index.body.html.twig") }}
+    {{ include("SandboxFrontBundle:Includes:car.info.html.twig") }}
 {% endblock %}
 
 {%  block footer %}

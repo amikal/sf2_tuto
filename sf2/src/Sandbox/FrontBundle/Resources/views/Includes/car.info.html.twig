@@ -1,0 +1,18 @@
+<table>
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Marque</td>
+            <td>Created at</td>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{{ car.name }}</td>
+        <td>{{ car.type }}</td>
+        <td>{{ car.marque }}</td>
+        <td>{{ car.created|date('d-m-y') }}</td>
+    </tr>
+    </tbody>
+</table>
