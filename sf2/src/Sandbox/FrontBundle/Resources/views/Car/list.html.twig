@@ -8,6 +8,7 @@
     {% for car in cars %}
         {% include 'SandboxFrontBundle:Includes:car.info.html.twig' with {'car': car} %}
     {% endfor %}
+    <a href="{{ path('sandbox_front_car_create') }}">Créer une voiture</a>
 {% endblock %}
 
 {%  block footer %}

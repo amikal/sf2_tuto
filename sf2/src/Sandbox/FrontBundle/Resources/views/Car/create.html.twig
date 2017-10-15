@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block title %}FRONTOFFICE - CREATE A NEW CAR{% endblock %}
+
+{%  block body %}
+    FRONTOFFICE - CREATE A NEW CAR
+    {{ include("SandboxFrontBundle:Includes:index.body.html.twig") }}
+    {{ form(form) }}
+{% endblock %}
+
+{%  block footer %}
+    {{ parent() }}
+    {% include ":Includes:footer.html.twig" %}
+{% endblock %}

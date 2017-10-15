@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityNotFoundException;
 use Sandbox\BackBundle\Entity\Car;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -17,31 +18,37 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class CarController extends Controller
 {
     /**
-     * @Route("/car/{id}")
+     * @Route("/car/create")
      */
-    public function carAction($id)
+    public function createAction(Request $request)
     {
-        /* @var $session Session */
-        $session = $this->get('session');
-        $session->set('userName', 'John');
-        //dump($session);
+        $form = $this->createFormBuilder(new Car())
+            ->add('name')
+            ->add('type')
+            ->add('marque')
+            ->add('created', 'date')
+            ->add('submit', 'submit')
+            ->getForm();
 
-//        $session->getFlashBag()->add('errors_info', 'no_error_here');
-//        $session->getFlashBag()->add('errors_info', 'no_error_here2');
-//        $session->getFlashBag()->add('errors_info', 'no_error_here3');
+        $form->handleRequest($request);
 
-        $repository = $this->getDoctrine()->getManager()->getRepository('SandboxBackBundle:Car');
-        $car = $repository->find($id);
+        if($request->isMethod('post') && $form->isValid()) {
+//            dump($form->isValid());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($form->getData());
+            $em->flush();
 
-        if (!$car) {
-            throw new EntityNotFoundException();
+            $url = $this->generateUrl('sandbox_front_car_carlist');
+            dump($url);
+            return $this->redirect($url);
+
         }
 
-        return $this->render('SandboxFrontBundle:Car:car.html.twig', ['car' => $car]);
+        return $this->render('SandboxFrontBundle:Car:create.html.twig', ['form' => $form->createView()]);
     }
 
     /**
-     * @Route("/cars")
+     * @Route("/car/list")
      */
     public function carListAction()
     {
@@ -64,6 +71,31 @@ class CarController extends Controller
        $cars = $repository->getAll();
        dump($cars);
 
-       return $this->render('SandboxFrontBundle:Car:carList.html.twig', ['cars' => $cars]);
+       return $this->render('SandboxFrontBundle:Car:list.html.twig', ['cars' => $cars]);
     }
+
+    /**
+     * @Route("/car/{id}")
+     */
+    public function carAction($id)
+    {
+        /* @var $session Session */
+        $session = $this->get('session');
+        $session->set('userName', 'John');
+        //dump($session);
+
+//        $session->getFlashBag()->add('errors_info', 'no_error_here');
+//        $session->getFlashBag()->add('errors_info', 'no_error_here2');
+//        $session->getFlashBag()->add('errors_info', 'no_error_here3');
+
+        $repository = $this->getDoctrine()->getManager()->getRepository('SandboxBackBundle:Car');
+        $car = $repository->find($id);
+
+        if (!$car) {
+            throw new EntityNotFoundException();
+        }
+
+        return $this->render('SandboxFrontBundle:Car:show.html.twig', ['car' => $car]);
+    }
+
 }

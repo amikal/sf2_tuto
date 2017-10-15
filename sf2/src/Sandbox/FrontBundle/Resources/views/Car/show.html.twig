@@ -12,7 +12,8 @@
     </ul>
     {{ include("SandboxFrontBundle:Includes:index.body.html.twig") }}
     {{ include("SandboxFrontBundle:Includes:car.info.html.twig") }}
-    <a href="{{ path('sandbox_front_car_carlist') }}">Retour au listing</a>
+    <a href="{{ path('sandbox_front_car_carlist') }}">Retour au listing</a><br />
+    <a href="{{ path('sandbox_front_car_create') }}">Créer une voiture</a>
 {% endblock %}
 
 {%  block footer %}
