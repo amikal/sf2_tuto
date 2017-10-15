@@ -3,7 +3,7 @@
 {% block title %}FRONTOFFICE - CAR LIST{% endblock %}
 
 {%  block body %}
-    FRONTOFFICE - CAR LIST
+    FRONTOFFICE - CAR LIST - Username {{ app.session.get('userName') }}
     {{ include("SandboxFrontBundle:Includes:index.body.html.twig") }}
 {% endblock %}
 

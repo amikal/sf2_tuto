@@ -6,6 +6,7 @@ namespace Sandbox\FrontBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Class Car
@@ -18,6 +19,11 @@ class CarController extends Controller
      */
     public function carAction($id)
     {
+        /* @var $session Session */
+        $session = $this->get('session');
+        $session->set('userName', 'John');
+        dump($session);
+
         return $this->render('SandboxFrontBundle:Car:car.html.twig', ['id' => $id]);
     }
 
