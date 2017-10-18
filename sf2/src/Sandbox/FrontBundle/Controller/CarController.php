@@ -5,6 +5,7 @@ namespace Sandbox\FrontBundle\Controller;
 
 use Doctrine\ORM\EntityNotFoundException;
 use Sandbox\BackBundle\Entity\Car;
+use Sandbox\FrontBundle\Form\Type\CarType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,13 +23,7 @@ class CarController extends Controller
      */
     public function createAction(Request $request)
     {
-        $form = $this->createFormBuilder(new Car())
-            ->add('name', null, ['label' => 'Nom du modèle'] )
-            ->add('type')
-            ->add('marque')
-            ->add('created', 'date')
-            ->add('submit', 'submit')
-            ->getForm();
+        $form = $this->createForm(new CarType());
 
         $form->handleRequest($request);
 
