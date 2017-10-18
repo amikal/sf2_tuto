@@ -20,9 +20,5 @@ services:
 
     car_handler:
         class: %car.handler.class%
-        arguments: [@car_form, @request, @car_manager]
+        arguments: [@car_form, @request, @car_manager, @validator]
         scope: request
-
-    car_manager:
-        class: %car.manager.class%
-        arguments: [@doctrine.orm.entity_manager]

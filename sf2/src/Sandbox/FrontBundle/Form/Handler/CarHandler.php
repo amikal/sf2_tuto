@@ -5,6 +5,8 @@ namespace Sandbox\FrontBundle\Form\Handler;
 use Sandbox\BackBundle\Services\CarManager;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Class CarHandler
@@ -26,18 +28,31 @@ class CarHandler
      */
     protected $manager;
 
+    /**
+     * @var ValidatorInterface
+     */
+    protected $validator;
+
+    /**
+     * @var int
+     */
+    public $errors;
+
 
     /**
      * CarHandler constructor.
      * @param Form $form
      * @param Request $request
      * @param CarManager $manager
+     * @param ValidatorInterface $validator
      */
-    public function __construct(Form $form, Request $request, CarManager $manager)
+    public function __construct(Form $form, Request $request, CarManager $manager, ValidatorInterface $validator)
     {
         $this->form = $form;
         $this->request = $request;
         $this->manager = $manager;
+        $this->validator = $validator;
+        $this->errors = 0;
     }
 
     /**
@@ -62,13 +77,35 @@ class CarHandler
     public function process()
     {
         $this->form->handleRequest($this->request);
-        if ($this->request->isMethod('post') && $this->form->isValid()) {
+
+        if ($this->request->isMethod('post')) {
+
+            if (count($this->validate()) > 0) {
+                return false;
+            }
+
             $this->onSuccess();
 
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\ConstraintViolationListInterface
+     */
+    protected function validate()
+    {
+        return $this->errors = $this->validator->validate($this->form->getData());
+    }
+
+    /**
+     * @return int
+     */
+    public function getErrors()
+    {
+        return $this->errors;
     }
 
     /**

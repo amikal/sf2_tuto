@@ -24,7 +24,9 @@ class CarController extends Controller
             return $this->redirect($this->generateUrl('sandbox_front_car_carlist'));
         }
 
-        return $this->render('SandboxFrontBundle:Car:create.html.twig', ['form' => $carFormHandler->getView()]);
+        dump($carFormHandler->getErrors());
+
+        return $this->render('SandboxFrontBundle:Car:create.html.twig', ['form' => $carFormHandler->getView(), 'errors' => $carFormHandler->getErrors()]);
     }
 
     /**
