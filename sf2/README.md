@@ -201,3 +201,13 @@ class CarType extends AbstractType
         return 'car';
     }
 }
+
+
+#Creation du formHandler / refactor de la handleRequest
+
+Le formHandler va permettre de déporter le code de processing du form, il va prendre en charge les tests sur la request le type de form surlequel il doit gérer le process du form
+
+  $carFormHandler = new CarHandler($this->createForm(new CarType(), new Car()), $request);
+
+        if($carFormHandler->process()) {
+        ...

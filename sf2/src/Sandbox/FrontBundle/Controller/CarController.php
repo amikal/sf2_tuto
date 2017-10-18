@@ -5,6 +5,7 @@ namespace Sandbox\FrontBundle\Controller;
 
 use Doctrine\ORM\EntityNotFoundException;
 use Sandbox\BackBundle\Entity\Car;
+use Sandbox\FrontBundle\Form\Handler\CarHandler;
 use Sandbox\FrontBundle\Form\Type\CarType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,14 +24,12 @@ class CarController extends Controller
      */
     public function createAction(Request $request)
     {
-        $form = $this->createForm(new CarType());
+        $carFormHandler = new CarHandler($this->createForm(new CarType(), new Car()), $request);
 
-        $form->handleRequest($request);
-
-        if($request->isMethod('post') && $form->isValid()) {
+        if($carFormHandler->process()) {
 //            dump($form->isValid());
             $em = $this->getDoctrine()->getManager();
-            $em->persist($form->getData());
+            $em->persist($carFormHandler->getForm()->getData());
             $em->flush();
 
             $url = $this->generateUrl('sandbox_front_car_carlist');
@@ -39,7 +38,7 @@ class CarController extends Controller
 
         }
 
-        return $this->render('SandboxFrontBundle:Car:create.html.twig', ['form' => $form->createView()]);
+        return $this->render('SandboxFrontBundle:Car:create.html.twig', ['form' => $carFormHandler->getForm()->createView()]);
     }
 
     /**
