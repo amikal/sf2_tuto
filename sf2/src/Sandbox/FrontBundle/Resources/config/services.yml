@@ -1,4 +1,23 @@
+parameters:
+    car_form_type.class: Sandbox\FrontBundle\Form\Type\CarType
+    car_handler.class: Sandbox\FrontBundle\Form\Handler\CarHandler
+    symfony.form.class: Symfony\Component\Form\Form
+
 services:
-#    sandbox_front.example:
-#        class: Sandbox\FrontBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    car_form:
+        factory_service: form.factory
+        factory_method: createNamed
+        class: %symfony.form.class%
+        arguments:
+            - car
+            - car_form
+
+    car_form_type:
+        class: %car_form_type.class%
+        tags:
+            - { name: form.type, alias: car_form }
+
+    car_handler:
+        class: %car_handler.class%
+        arguments: [@car_form, @request, @doctrine.orm.entity_manager]
+        scope: request

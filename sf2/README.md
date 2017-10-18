@@ -211,3 +211,46 @@ Le formHandler va permettre de déporter le code de processing du form, il va pr
 
         if($carFormHandler->process()) {
         ...
+
+Le formHandler va avoir la gestion de création du form, de process, et persistence
+Voici la configuration des déclarations de service en yml :
+
+parameters:
+    car_form_type.class: Sandbox\FrontBundle\Form\Type\CarType
+    car_handler.class: Sandbox\FrontBundle\Form\Handler\CarHandler
+    symfony.form.class: Symfony\Component\Form\Form
+
+services:
+    car_form:
+        factory_service: form.factory
+        factory_method: createNamed
+        class: %symfony.form.class%
+        arguments:
+            - car
+            - car_form
+
+    car_form_type:
+        class: %car_form_type.class%
+        tags:
+            - { name: form.type, alias: car_form }
+
+    car_handler:
+        class: %car_handler.class%
+        arguments: [@car_form, @request, @doctrine.orm.entity_manager]
+        scope: request
+
+Voici le prototype d'un appel du create dans un controller apres refactorisation
+
+    /**
+     * @Route("/car/create")
+     */
+    public function createAction(Request $request)
+    {
+        $carFormHandler = $this->get('car_handler');
+
+        if($carFormHandler->process()) {
+            return $this->redirect($this->generateUrl('sandbox_front_car_carlist'));
+        }
+
+        return $this->render('SandboxFrontBundle:Car:create.html.twig', ['form' => $carFormHandler->getView()]);
+    }

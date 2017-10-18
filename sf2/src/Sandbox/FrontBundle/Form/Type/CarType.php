@@ -28,6 +28,6 @@ class CarType extends AbstractType
 
     public function getName()
     {
-        return 'car';
+        return 'car_form';
     }
 }
