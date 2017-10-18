@@ -254,3 +254,49 @@ Voici le prototype d'un appel du create dans un controller apres refactorisation
 
         return $this->render('SandboxFrontBundle:Car:create.html.twig', ['form' => $carFormHandler->getView()]);
     }
+    
+On enleve la responsabilité de persistence dans le carHandler pour le déporter dans un classe service ManagerEntity
+
+    car_manager:
+        class: %car.manager.class%
+        arguments: [@doctrine.orm.entity_manager]
+        
+\
+
+<?php
+
+namespace Sandbox\BackBundle\Services;
+
+use Doctrine\ORM\EntityManager;
+
+class CarManager
+{
+    /**
+     * @var EntityManager
+     */
+    private $em;
+    private $repository;
+
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+        $this->repository = $this->em->getRepository('SandboxBackBundle:Car');
+    }
+
+    public function persist($car)
+    {
+        $this->em->persist($car);
+        $this->em->flush();
+    }
+
+    public function getAll()
+    {
+        return $this->repository->getAll();
+    }
+
+    public function find($id)
+    {
+        return $this->repository->find($id);
+    }
+
+}

@@ -2,7 +2,7 @@
 
 namespace Sandbox\FrontBundle\Form\Handler;
 
-use Doctrine\ORM\EntityManager;
+use Sandbox\BackBundle\Services\CarManager;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -22,22 +22,22 @@ class CarHandler
     protected $request;
 
     /**
-     * @var EntityManager
+     * @var CarManager
      */
-    protected $em;
+    protected $manager;
 
 
     /**
      * CarHandler constructor.
      * @param Form $form
      * @param Request $request
-     * @param EntityManager $em
+     * @param CarManager $manager
      */
-    public function __construct(Form $form, Request $request, EntityManager $em)
+    public function __construct(Form $form, Request $request, CarManager $manager)
     {
         $this->form = $form;
         $this->request = $request;
-        $this->em = $em;
+        $this->manager = $manager;
     }
 
     /**
@@ -76,7 +76,6 @@ class CarHandler
      */
     protected function onSuccess()
     {
-        $this->em->persist($this->form->getData());
-        $this->em->flush();
+        $this->manager->persist($this->form->getData());
     }
 }
