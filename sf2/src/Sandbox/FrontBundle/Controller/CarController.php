@@ -26,7 +26,7 @@ class CarController extends Controller
 
         dump($carFormHandler->getErrors());
 
-        return $this->render('SandboxFrontBundle:Car:create.html.twig', ['form' => $carFormHandler->getView(), 'errors' => $carFormHandler->getErrors()]);
+        return $this->render('SandboxFrontBundle:Car:create.html.twig', ['form' => $carFormHandler->createView(), 'errors' => $carFormHandler->getErrors()]);
     }
 
     /**

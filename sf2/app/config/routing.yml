@@ -1,3 +1,7 @@
+sandbox_rest:
+    resource: "@SandboxRestBundle/Controller/"
+    type:     rest
+
 sandbox_back:
     resource: "@SandboxBackBundle/Controller/"
     type:     annotation

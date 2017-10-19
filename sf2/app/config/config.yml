@@ -73,5 +73,7 @@ fos_rest:
     param_fetcher_listener: true
     body_listener: true
     format_listener: true
+    routing_loader:
+        include_format: false
     view:
         view_response_listener: 'force'

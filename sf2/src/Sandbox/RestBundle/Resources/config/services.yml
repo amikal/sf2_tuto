@@ -1,0 +1,4 @@
+services:
+#    sandbox_rest.example:
+#        class: Sandbox\RestBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

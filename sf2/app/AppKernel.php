@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Sandbox\BackBundle\SandboxBackBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
+            new Sandbox\RestBundle\SandboxRestBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

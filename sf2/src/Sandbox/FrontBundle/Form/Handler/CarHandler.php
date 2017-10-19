@@ -5,7 +5,6 @@ namespace Sandbox\FrontBundle\Form\Handler;
 use Sandbox\BackBundle\Services\CarManager;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -66,7 +65,7 @@ class CarHandler
     /**
      * @return \Symfony\Component\Form\FormView
      */
-    public function getView()
+    public function createView()
     {
         return $this->form->createView();
     }
@@ -77,6 +76,8 @@ class CarHandler
     public function process()
     {
         $this->form->handleRequest($this->request);
+
+
 
         if ($this->request->isMethod('post')) {
 

@@ -12,6 +12,8 @@ services:
         arguments:
             - car
             - car_form
+            - null
+            - { action: '/cars'}
 
     car_form_type:
         class: %car.form.type.class%

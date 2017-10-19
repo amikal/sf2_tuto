@@ -1,0 +1,8 @@
+Sandbox\BackBundle\Entity\Car:
+    properties:
+        name:
+            - NotBlank: ~
+        type:
+            - NotBlank: ~
+        marque:
+            - NotBlank: ~
