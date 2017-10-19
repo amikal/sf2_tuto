@@ -2,10 +2,14 @@
 
 namespace Sandbox\FrontBundle\Controller;
 
+
 use Doctrine\ORM\EntityNotFoundException;
+use Sandbox\FrontBundle\Form\Handler\CarHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\JsonResponse as JsR;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class Car
@@ -18,9 +22,10 @@ class CarController extends Controller
      */
     public function createAction()
     {
+        /* @var $carFormHandler CarHandler */
         $carFormHandler = $this->get('car_handler');
 
-        if($carFormHandler->process()) {
+        if($carFormHandler->doProcess()) {
             return $this->redirect($this->generateUrl('sandbox_front_car_carlist'));
         }
 
@@ -82,6 +87,27 @@ class CarController extends Controller
         }
 
         return $this->render('SandboxFrontBundle:Car:show.html.twig', ['car' => $car]);
+    }
+
+    /**
+     * @Route("/find", options = { "expose" = true }, name = "find_car_ajax")
+     */
+    public function findAction(Request $request)
+    {
+        $cars = $this->get('car_manager')->ajaxFindCar($request);
+        return new JsR($cars);
+    }
+
+    /**
+     * @Route("/get/{ids}", options = { "expose" = true }, name = "get_car_ajax")
+     */
+    public function getAction($ids)
+    {
+        $expr = new Expr();
+        $ids = explode(',', $ids);
+
+        $cars = $this->get('car_manager')->ajaxGetCar($ids);
+        return new JsR($cars);
     }
 
 }

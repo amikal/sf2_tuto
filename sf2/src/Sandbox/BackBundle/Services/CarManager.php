@@ -3,6 +3,7 @@
 namespace Sandbox\BackBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\BrowserKit\Request;
 
 class CarManager
 {
@@ -33,5 +34,16 @@ class CarManager
     {
         return $this->repository->find($id);
     }
+
+    public function ajaxFindCar(Request $request)
+    {
+        return $this->repository->ajaxFindCar($request);
+    }
+
+    public function ajaxGetCar($ids)
+    {
+        return $this->repository->ajaxFindCar($ids);
+    }
+
 
 }

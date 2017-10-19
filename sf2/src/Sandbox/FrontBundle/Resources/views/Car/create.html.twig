@@ -12,6 +12,48 @@
     {{ form_rest(form) }}
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            var urlFind = Routing.generate('find_car_ajax');
+            var urlGet = Routing.generate('get_car_ajax');
+
+            $('#car_type').select2({
+                multiple: false,
+                minimumInputLength: 2,
+                ajax: {
+                    url: urlFind,
+                    dataType: 'json',
+                    data: function (term) {
+                        return {
+                            q: term
+                        };
+                    },
+                    results: function (data) {
+                        return { results: data };
+                    }
+                },
+                formatResult: function(object) {
+                    return object.type;
+                },
+                formatSelection: function(object) {
+                    return object.type;
+                },
+                initSelection: function(element, callback) {
+                    var ids=$(element).val();
+                    if (ids !== '') {
+                        $.ajax( urlGet + ids, {
+                            dataType: 'json'
+                        }).done(function(data) { callback(data); });
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
 {%  block footer %}
     {{ parent() }}
     {% include ":Includes:footer.html.twig" %}

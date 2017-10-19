@@ -73,7 +73,7 @@ class CarHandler
     /**
      * @return bool
      */
-    public function process()
+    public function doProcess()
     {
         $this->form->handleRequest($this->request);
 

@@ -38,7 +38,7 @@ class CarController extends Controller
         dump($carFormHandler);
         //die();
 
-        if($carFormHandler->process()) {
+        if($carFormHandler->doProcess()) {
             return $this->redirect($this->generateUrl('sandbox_front_car_carlist'));
         }
 

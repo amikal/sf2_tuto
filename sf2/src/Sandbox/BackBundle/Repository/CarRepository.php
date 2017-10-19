@@ -2,6 +2,9 @@
 
 namespace Sandbox\BackBundle\Repository;
 
+use Doctrine\ORM\Query\Expr;
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * CarRepository
  *
@@ -22,6 +25,34 @@ class CarRepository extends \Doctrine\ORM\EntityRepository
         $query = $qb;
 
         $result = $query->getQuery()->execute();
+
+        return $result;
+    }
+
+    public function ajaxFindCar(Request $request)
+    {
+        $expr = new Expr();
+
+        $result = $this->createQueryBuilder('c')
+            ->select('c.type, c.id')
+            ->where($expr->like('c.type', ':type'))
+            ->setParameter('type', sprintf('%s%%', $request->query->get('q', '')))
+            ->getQuery()
+            ->getArrayResult();
+
+        return $result;
+    }
+
+    public function ajaxGetCar($îds)
+    {
+        $expr = new Expr();
+
+        $result = $this->createQueryBuilder('c')
+            ->select('c.id, c.type')
+            ->where($expr->in('c.id', ':ids'))
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->getArrayResult();
 
         return $result;
     }
